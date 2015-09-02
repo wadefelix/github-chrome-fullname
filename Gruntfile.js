@@ -35,7 +35,10 @@ module.exports = function(grunt) {
                     "node_modules/jasmine-jquery/lib/jasmine-jquery.js"
                 ],
                 specs: "test/**/*.js",
-                polyfills : ["node_modules/es6-promise/dist/es6-promise.js"],
+                polyfills : [
+                    "node_modules/es6-promise/dist/es6-promise.js",
+                    "node_modules/whatwg-fetch/fetch.js"
+                ],
                 keepRunner: true,
                 template: require("grunt-template-jasmine-istanbul"),
                 templateOptions: {

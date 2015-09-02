@@ -1,8 +1,9 @@
 "use strict";
 
 function ReplaceRestricter() {
-    this.restrictedUrls = [
-        "issues/new" // Create new issue. If replace is executed on this page it will slow down the whole browser.
+    this.throttledUrls = [
+        /issues\/new$/, // Create new issue. If replace is executed on this page it will slow down the whole browser.
+        /pull\/\d+\/files$/ // The diff of all files of a PR can get pretty huge. It's better to not replace anyting on this page
     ];
     // List of all "exceptions" (criteria, when a user ID should NOT be replaced by the real name)
     this.restrictedElements = [{
@@ -30,13 +31,13 @@ function ReplaceRestricter() {
     }];
 }
 
-ReplaceRestricter.prototype.isAllowedUrl = function(currentUrl) {
-    for (var i = 0; i < this.restrictedUrls.length; i++) {
-        if (currentUrl.indexOf(this.restrictedUrls[i]) !== -1) {
-            return false;
+ReplaceRestricter.prototype.isThrottledPage = function(currentUrl) {
+    for (var i = 0; i < this.throttledUrls.length; i++) {
+        if (this.throttledUrls[i].test(currentUrl)) {
+            return true;
         }
     }
-    return true;
+    return false;
 };
 
 //Checks if a jQuery element fulfills any of the replacement exceptions

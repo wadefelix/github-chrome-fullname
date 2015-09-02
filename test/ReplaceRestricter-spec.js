@@ -39,12 +39,12 @@ describe("ReplaceRestricterTest", function() {
         expect(restricter.isReplacementAllowed(jQuery("#gitCheckoutCommand"))).toBe(false);
     });
 
-    it("create a new issue is not an allowed url", function() {
-        expect(restricter.isAllowedUrl("http://corporate.github/issues/new")).toBe(false);
+    it("create a new issue is a throttled allowed url", function() {
+        expect(restricter.isThrottledPage("http://corporate.github/issues/new")).toBe(true);
     });
 
     it("view commits is an allowed url", function() {
-        expect(restricter.isAllowedUrl("http://corporate.github/sample/commits/master")).toBe(true);
+        expect(restricter.isThrottledPage("http://corporate.github/sample/commits/master")).toBe(false);
     });
 
 });

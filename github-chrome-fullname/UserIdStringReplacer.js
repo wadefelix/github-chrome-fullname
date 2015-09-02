@@ -58,8 +58,8 @@ UserIdStringReplacer.prototype.loadUserName = function(userId) {
             userId: userId
         };
         var deferedUserName = fetch(githubUserApiUrl + userId)
-        .then(function(result){
-            return result.json();
+        .then(function(fetchResult){
+            return fetchResult.json();
         }).then(function(data){
             //Check if the user entered a real name
             if (data.name) {
