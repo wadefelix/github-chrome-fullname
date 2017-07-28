@@ -1,6 +1,6 @@
 {
     "name": "Name instead of UserId for SAP GitHub",
-    "description": "Display full name instead of UserId for SAP GitHub Enterprise instance & perform Autologin via external IDP if logged out",
+    "description": "Display full name instead of UserId for SAP Zenhub instance",
     "version": "0.6.2",
     "manifest_version": 2,
     "content_scripts": [
@@ -10,7 +10,8 @@
             ],
             "matches": [
                 "https://github.wdf.sap.corp/*",
-                "https://github.tools.sap/*"
+                "https://github.tools.sap/*",
+                "https://zenhub.mo.sap.corp/app/*"
             ],
             "exclude_matches": [
                 "https://github.wdf.sap.corp/pages*",
