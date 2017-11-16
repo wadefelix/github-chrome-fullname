@@ -1,5 +1,5 @@
 {
-  "name": "github-chrome-fullname",
+  "name": "github-chrome-fullname-infra",
   "version": "0.4.0",
   "description": "Full name instead of UserId for SAP GitHub",
   "main": "build/index.bundle.js",

@@ -1,6 +1,6 @@
 {
-    "name": "Name instead of UserId for SAP GitHub",
-    "description": "Display full name instead of UserId for SAP GitHub Enterprise instance",
+    "name": "Name instead of UserId for SAP GitHub Infra",
+    "description": "Display full name instead of UserId for SAP GitHub Enterprise Infra instance",
     "version": "0.4.0",
     "manifest_version": 2,
     "content_scripts": [{
@@ -8,11 +8,10 @@
             "index.bundle.js"
         ],
         "matches": [
-            "https://github.wdf.sap.corp/*",
-            "https://huboard.mo.sap.corp/*"
+            "https://github.infra.hana.ondemand.com/*"
         ],
         "exclude_matches": [
-        	"https://github.wdf.sap.corp/pages*"
+        	"https://github.infra.hana.ondemand.com/pages*"
         ]
     }],
     "permissions": [
