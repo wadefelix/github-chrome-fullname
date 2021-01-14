@@ -11,7 +11,8 @@
             "matches": [
                 "https://github.wdf.sap.corp/*",
                 "https://github.tools.sap/*",
-                "https://zenhub.mo.sap.corp/app/*"
+                "https://zenhub.mo.sap.corp/app/*",
+                "https://zenhub.tools.sap.corp/app/*"
             ],
             "exclude_matches": [
                 "https://github.wdf.sap.corp/pages*",
