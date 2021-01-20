@@ -1,5 +1,5 @@
 {
-    "name": "Name instead of UserId for SAP GitHub",
+    "name": "SAP Zenhub name instead of UserId",
     "description": "Display full name instead of UserId for SAP Zenhub instance",
     "version": "0.6.2",
     "manifest_version": 2,
@@ -12,7 +12,8 @@
                 "https://github.wdf.sap.corp/*",
                 "https://github.tools.sap/*",
                 "https://zenhub.mo.sap.corp/app/*",
-                "https://zenhub.tools.sap.corp/app/*"
+                "https://zenhub.tools.sap.corp/app/*",
+                "https://zenhub.wdf.sap.corp/app/*"
             ],
             "exclude_matches": [
                 "https://github.wdf.sap.corp/pages*",
