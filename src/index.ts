@@ -41,4 +41,4 @@ function triggerRelogin(): void {
 }
 
 // Check if the current user is logged in and trigger a relogin if that is not the case
-triggerRelogin()
+// triggerRelogin()

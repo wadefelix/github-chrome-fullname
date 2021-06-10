@@ -37,8 +37,49 @@ export class NodeReplacer {
         }
     }
 
+    public async replaceEle(element: Node) {
+        var commitauthor_eles = document.getElementsByClassName('commit-author')
+        var eles = document.getElementsByClassName('author')
+        var author_eles  = Array.prototype.filter.call(eles, function(ele: Element) {
+            return ele.hasAttribute('data-hovercard-type') && ele.getAttribute('data-hovercard-type') == "user";
+        })
+        eles = document.getElementsByClassName('Link--muted')
+        var linkmuted_eles = Array.prototype.filter.call(eles, function(ele: Element) {
+            return ele.hasAttribute('data-hovercard-type') && ele.getAttribute('data-hovercard-type') == "user";
+        })
+        const pending = []
+        for (var i = 0; i < commitauthor_eles.length; i++) {
+            pending.push(this._replaceEle(commitauthor_eles[i]))
+        }
+        for (var i = 0; i < author_eles.length; i++) {
+            pending.push(this._replaceEle(author_eles[i]))
+        }
+        for (var i = 0; i < linkmuted_eles.length; i++) {
+            pending.push(this._replaceEle(linkmuted_eles[i]))
+        }
+        await Promise.all(pending)
+    }
+    public async _replaceEle(node: Element) {
+        if(!node.textContent) {
+            return
+        }
+        const pending = []
+        pending.push(this._replaceText(node.textContent, node))
+        await Promise.all(pending)
+    }
+    public async _replaceText(id: string, node: Element) {
+        const user = await this._api.getUser(id, window.location.hostname)
+        if(!user) {
+            return
+        }
+        let userName = user.getName()
+        if(userName && userName != "" && node.textContent) {
+            node.textContent = node.textContent.replace(id, userName)
+        }
+    }
+
     public async replace(element: Node) {
-        const walker = document.createTreeWalker(element, 4)
+        const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT)
         const pending = []
         let x = 0
         while(walker.nextNode()) {

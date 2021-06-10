@@ -47,7 +47,7 @@ export class API3 {
     public async getUser(id: string, root: string): Promise<User> {
         const userKey = `${id}-${root}`
         if (!this.userMap.has(userKey)) {
-            this.userMap.set(userKey, this.getUserFromGitHub(id, root).then((user): User => {
+            this.userMap.set(userKey, this.getUserFromOA(id, root).then((user): User => {
                 if ((user.getName() + '').trim().length) {
                     chrome.storage.local.set({
                         [userKey]: {
@@ -60,6 +60,28 @@ export class API3 {
             }))
         }
         return this.userMap.get(userKey) as Promise<User>
+    }
+
+    public async getUserFromOA(id: string, root: string): Promise<User> {
+        let data: GitHubUser = {
+            id: id,
+            name: id
+        }
+        try {
+            const response = await fetch(`https://oa-server.intra/user/id_convert?to=oa&id=${id}`, {
+                method: "GET",
+                cache: "force-cache"
+            })
+            const responseText = await response.text()
+            const match = responseText.replace(/"/g,"")
+            if (match.length>0) {
+                data.name = match
+            }
+        } catch (e) {
+            console.log(e)
+            console.error(`Could not get user ${id}`)
+        }
+        return new User(data)
     }
 
     public async getUserFromGitHub(id: string, root: string): Promise<User> {
