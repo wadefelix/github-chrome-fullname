@@ -1,5 +1,5 @@
 {
-    "name": "Name instead of UserId for GitHub",
+    "name": "UserId Replacer for GitHub",
     "description": "Display the OA ID instead of UserId for GitHub.",
     "version": "0.6.4",
     "manifest_version": 2,

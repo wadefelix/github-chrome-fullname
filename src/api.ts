@@ -88,7 +88,7 @@ export class API3 {
           await this.readOptions()
         }
         try {
-            const response = await fetch(`https://oa-server.intra/user/id_convert?to=oa&id=${id}`, {
+            const response = await fetch(`${this.api}${id}`, {
                 method: "GET",
                 cache: "force-cache"
             })
