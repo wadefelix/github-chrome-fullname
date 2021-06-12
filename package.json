@@ -5,7 +5,7 @@
   "main": "build/index.bundle.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/cgrail/github-chrome-fullname.git"
+    "url": "git+https://github.com/wadefelix/github-chrome-fullname.git"
   },
   "scripts": {
     "start": "npm run build -- --watch",
@@ -19,9 +19,9 @@
   },
   "author": "Christian Grail",
   "bugs": {
-    "url": "https://github.com/cgrail/github-chrome-fullname/issues"
+    "url": "https://github.com/wadefelix/github-chrome-fullname/issues"
   },
-  "homepage": "https://github.com/cgrail/github-chrome-fullname",
+  "homepage": "https://github.com/wadefelix/github-chrome-fullname",
   "devDependencies": {
     "@types/chrome": "0.0.164",
     "@types/jsdom": "^12.2.3",
