@@ -1,6 +1,6 @@
 {
-    "name": "Name instead of UserId for SAP GitHub",
-    "description": "Display full name instead of UserId for SAP GitHub Enterprise instance & perform auto login via IDP if logged out",
+    "name": "Name instead of UserId for GitHub",
+    "description": "Display the OA ID instead of UserId for GitHub.",
     "version": "0.6.4",
     "manifest_version": 2,
     "content_scripts": [
@@ -9,12 +9,9 @@
                 "index.bundle.js"
             ],
             "matches": [
-                "https://github.wdf.sap.corp/*",
-                "https://github.tools.sap/*"
+                "https://github.com/*"
             ],
             "exclude_matches": [
-                "https://github.wdf.sap.corp/pages*",
-                "https://pages.github.tools.sap/*"
             ]
         }
     ],
@@ -25,5 +22,8 @@
         "16": "img/icon16.png",
         "48": "img/icon48.png",
         "128": "img/icon128.png"
+    },
+    "options_ui":{ 
+        "page": "options.html"
     }
 }

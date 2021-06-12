@@ -39,17 +39,14 @@ export class NodeReplacer {
 
     public async replaceEle(element: Node) {
         var commitauthor_eles = document.getElementsByClassName('commit-author')
-        console.dir(commitauthor_eles)
         var eles = document.getElementsByClassName('author')
         var author_eles  = Array.prototype.filter.call(eles, function(ele: Element) {
             return ele.hasAttribute('data-hovercard-type') && ele.getAttribute('data-hovercard-type') == "user";
         })
-        console.dir(author_eles)
         eles = document.getElementsByClassName('Link--muted')
         var linkmuted_eles = Array.prototype.filter.call(eles, function(ele: Element) {
             return ele.hasAttribute('data-hovercard-type') && ele.getAttribute('data-hovercard-type') == "user";
         })
-        console.dir(linkmuted_eles)
         const pending = []
         for (var i = 0; i < commitauthor_eles.length; i++) {
             const curNode = commitauthor_eles[i]

@@ -24,6 +24,13 @@ module.exports = {
   plugins: [
     new CopyWebpackPlugin([
         {
+            context: 'src',
+            from: {
+              glob: "options.*",
+            },
+            to: path.resolve(__dirname, "build/")
+        },
+        {
             from: path.resolve(__dirname, "src/manifest.json"),
             to: path.resolve(__dirname, "build/manifest.json")
         },

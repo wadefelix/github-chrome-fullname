@@ -1,3 +1,4 @@
+import { resolve } from "dns"
 import "isomorphic-fetch"
 
 interface GitHubUser {
@@ -27,11 +28,17 @@ export class User {
 export class API3 {
     private userMap: Map<string, Promise<User>>
     private readonly chromeStorageExpiry = 1000 * 60 * 60 * 24 * 7; // 1 week
+    private api: string
 
 
     public constructor() {
         this.userMap = new Map()
+        this.api = ''
+        let _this = this
 
+        chrome.storage.sync.get({"api": ''}, function(options){
+            _this.api = options.api
+        })
         // Restoring cached values.
         chrome.storage.local.get(null, (cachedValues): void => {
             const currentTime = Date.now()
@@ -62,10 +69,23 @@ export class API3 {
         return this.userMap.get(userKey) as Promise<User>
     }
 
+    private async readOptions() {
+        var p = new Promise<string>(function(resolve, reject){
+            chrome.storage.sync.get({"api": ''}, function(options){
+                resolve(options.api);
+            })
+        });
+
+        this.api = await p
+        // console.log(this.api);
+    }
     public async getUserFromOA(id: string, root: string): Promise<User> {
         let data: GitHubUser = {
             id: id,
             name: id
+        }
+        if (this.api.length==0) {
+          await this.readOptions()
         }
         try {
             const response = await fetch(`https://oa-server.intra/user/id_convert?to=oa&id=${id}`, {
@@ -80,6 +100,7 @@ export class API3 {
         } catch (e) {
             console.log(e)
             console.error(`Could not get user ${id}`)
+            console.log(this.api+id)
         }
         return new User(data)
     }
