@@ -1,12 +1,9 @@
 {
   "name": "github-chrome-fullname",
   "version": "0.5.1",
-  "description": "Full name instead of UserId for SAP GitHub",
+  "description": "UserId Replacer for GitHub",
   "main": "build/index.bundle.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/wadefelix/github-chrome-fullname.git"
-  },
+  "repository": "git+https://github.com/wadefelix/github-chrome-fullname.git",
   "scripts": {
     "start": "npm run build -- --watch",
     "build": "webpack --config webpack.config.js",
@@ -17,7 +14,7 @@
     "lint": "eslint --ext ts src",
     "prepublish": "npm run clean && npm run test && npm run build"
   },
-  "author": "Christian Grail",
+  "author": "Ren Wei",
   "bugs": {
     "url": "https://github.com/wadefelix/github-chrome-fullname/issues"
   },
@@ -47,5 +44,6 @@
     "babel-polyfill": "^6.26.0",
     "babel-register": "^6.26.0",
     "isomorphic-fetch": "^2.2.1"
-  }
+  },
+  "license": "MIT"
 }

@@ -85,7 +85,7 @@ export class API3 {
             name: id
         }
         if (this.api.length==0) {
-          await this.readOptions()
+            await this.readOptions()
         }
         try {
             const response = await fetch(`${this.api}${id}`, {

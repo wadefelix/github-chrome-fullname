@@ -19,6 +19,14 @@ The Firefox version can be installed from the Firefox Addon Page:
 
 https://addons.mozilla.org/de/firefox/addon/sap-github/
 
+How To Build
+------------
+```bash
+docker run --rm -it -v $(pwd):/workspace -w /workspace --entrypoint=sh node:16.3.0-alpine3.13 -c 'yarn init'
+docker run --rm -it -v $(pwd):/workspace -w /workspace --entrypoint=sh node:16.3.0-alpine3.13 -c 'yarn install'
+docker run --rm -it -v $(pwd):/workspace -w /workspace --entrypoint=sh node:16.3.0-alpine3.13 -c 'yarn run build'
+```
+
 Todo
 ----
 

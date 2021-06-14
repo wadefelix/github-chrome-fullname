@@ -38,26 +38,26 @@ export class NodeReplacer {
     }
 
     public async replaceEle(element: Node) {
-        var commitauthor_eles = document.getElementsByClassName('commit-author')
+        var commitauthorEles = document.getElementsByClassName('commit-author')
         var eles = document.getElementsByClassName('author')
-        var author_eles  = Array.prototype.filter.call(eles, function(ele: Element) {
+        var authorEles  = Array.prototype.filter.call(eles, function(ele: Element) {
             return ele.hasAttribute('data-hovercard-type') && ele.getAttribute('data-hovercard-type') == "user";
         })
         eles = document.getElementsByClassName('Link--muted')
-        var linkmuted_eles = Array.prototype.filter.call(eles, function(ele: Element) {
+        var linkmutedEles = Array.prototype.filter.call(eles, function(ele: Element) {
             return ele.hasAttribute('data-hovercard-type') && ele.getAttribute('data-hovercard-type') == "user";
         })
         const pending = []
-        for (var i = 0; i < commitauthor_eles.length; i++) {
-            const curNode = commitauthor_eles[i]
+        for (var i = 0; i < commitauthorEles.length; i++) {
+            const curNode = commitauthorEles[i]
             pending.push(this._replaceEle(curNode))
         }
-        for (var i = 0; i < author_eles.length; i++) {
-            const curNode = author_eles[i]
+        for (var i = 0; i < authorEles.length; i++) {
+            const curNode = authorEles[i]
             pending.push(this._replaceEle(curNode))
         }
-        for (var i = 0; i < linkmuted_eles.length; i++) {
-            const curNode = linkmuted_eles[i]
+        for (var i = 0; i < linkmutedEles.length; i++) {
+            const curNode = linkmutedEles[i]
             pending.push(this._replaceEle(curNode))
         }
         await Promise.all(pending)
