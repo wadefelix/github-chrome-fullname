@@ -25,6 +25,8 @@ How To Build
 docker run --rm -it -v $(pwd):/workspace -w /workspace --entrypoint=sh node:16.3.0-alpine3.13 -c 'yarn init'
 docker run --rm -it -v $(pwd):/workspace -w /workspace --entrypoint=sh node:16.3.0-alpine3.13 -c 'yarn install'
 docker run --rm -it -v $(pwd):/workspace -w /workspace --entrypoint=sh node:16.3.0-alpine3.13 -c 'yarn run build'
+
+(cd build && zip -r ../UserIdReplacer.zip ./*)
 ```
 
 Todo
