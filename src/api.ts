@@ -1,5 +1,6 @@
 import { resolve } from "dns"
 import "isomorphic-fetch"
+const {JSONPath} = require('jsonpath-plus');
 
 interface GitHubUser {
     id: string;
@@ -111,10 +112,14 @@ export class API3 {
             const responseText = await response.text()
             if (this.options.apitype == 'json') {
                 // TODO
+                const result = JSONPath({path: this.options.jsonpath, json: JSON.parse(responseText)})
+                if (result.length>0) {
+                    data.name = result
+                }
             } else {
-                const match = responseText.replace(/"/g,"")
-                if (match.length>0) {
-                    data.name = match
+                const result = responseText.replace(/"/g,"")
+                if (result.length>0) {
+                    data.name = result
                 }
             }
         } catch (e) {
