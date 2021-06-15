@@ -5,6 +5,11 @@ interface GitHubUser {
     id: string;
     name: string;
 }
+interface Options {
+    api: string;
+    apitype: string;
+    jsonpath: string;
+}
 
 export class User {
     private user: GitHubUser
@@ -28,16 +33,22 @@ export class User {
 export class API3 {
     private userMap: Map<string, Promise<User>>
     private readonly chromeStorageExpiry = 1000 * 60 * 60 * 24 * 7; // 1 week
-    private api: string
+    private options: Options
 
 
     public constructor() {
         this.userMap = new Map()
-        this.api = ''
+        this.options = {
+            api: '',
+            apitype: 'plain',
+            jsonpath: '',
+        }
         let _this = this
 
         chrome.storage.sync.get({"api": ''}, function(options){
-            _this.api = options.api
+            _this.options.api = options.api;
+            _this.options.apitype = options.apitype;
+            _this.options.jsonpath = options.jsonpath;
         })
         // Restoring cached values.
         chrome.storage.local.get(null, (cachedValues): void => {
@@ -70,13 +81,18 @@ export class API3 {
     }
 
     private async readOptions() {
-        var p = new Promise<string>(function(resolve, reject){
-            chrome.storage.sync.get({"api": ''}, function(options){
-                resolve(options.api);
+        var options = new Promise<Options>(function(resolve, reject){
+            chrome.storage.sync.get({"api": '', "apitype": 'plain', "jsonpath": ''}, function(options){
+                let _options = {
+                    api: options.api,
+                    apitype: options.apitype,
+                    jsonpath: options.jsonpath,
+                }
+                resolve(_options);
             })
         });
 
-        this.api = await p
+        this.options = await options
         // console.log(this.api);
     }
     public async getUserFromOA(id: string, root: string): Promise<User> {
@@ -84,23 +100,27 @@ export class API3 {
             id: id,
             name: id
         }
-        if (this.api.length==0) {
-            await this.readOptions()
+        if (this.options.api.length==0) {
+          await this.readOptions()
         }
         try {
-            const response = await fetch(`${this.api}${id}`, {
+            const response = await fetch(`${this.options.api}${id}`, {
                 method: "GET",
                 cache: "force-cache"
             })
             const responseText = await response.text()
-            const match = responseText.replace(/"/g,"")
-            if (match.length>0) {
-                data.name = match
+            if (this.options.apitype == 'json') {
+                // TODO
+            } else {
+                const match = responseText.replace(/"/g,"")
+                if (match.length>0) {
+                    data.name = match
+                }
             }
         } catch (e) {
             console.log(e)
             console.error(`Could not get user ${id}`)
-            console.log(this.api+id)
+            console.log(this.options.api + id)
         }
         return new User(data)
     }
