@@ -113,7 +113,11 @@ export class API3 {
             if (this.options.apitype == 'json') {
                 // TODO
                 const result = JSONPath({path: this.options.jsonpath, json: JSON.parse(responseText)})
-                if (result.length>0) {
+                if (Array.isArray(result) && result.length == 1) {
+                    // 走的这个分支。这。。。
+                    // console.dir(result)
+                    data.name = result[0]
+                } else if (typeof result === "string" && result.length > 0) {
                     data.name = result
                 }
             } else {
