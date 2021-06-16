@@ -43,22 +43,24 @@ export class NodeReplacer {
         var authorEles  = Array.prototype.filter.call(eles, function(ele: Element) {
             return ele.hasAttribute('data-hovercard-type') && ele.getAttribute('data-hovercard-type') == "user";
         })
+        // reviewers
+        var assigneeEles = document.getElementsByClassName('assignee')
+
+        // PR user and others
         eles = document.getElementsByClassName('Link--muted')
         var linkmutedEles = Array.prototype.filter.call(eles, function(ele: Element) {
             return ele.hasAttribute('data-hovercard-type') && ele.getAttribute('data-hovercard-type') == "user";
         })
+        eles = document.getElementsByClassName('Link--primary')
+        var linkprimaryEles = Array.prototype.filter.call(eles, function(ele: Element) {
+            return ele.hasAttribute('data-hovercard-type') && ele.getAttribute('data-hovercard-type') == "user";
+        })
         const pending = []
-        for (var i = 0; i < commitauthorEles.length; i++) {
-            const curNode = commitauthorEles[i]
-            pending.push(this._replaceEle(curNode))
-        }
-        for (var i = 0; i < authorEles.length; i++) {
-            const curNode = authorEles[i]
-            pending.push(this._replaceEle(curNode))
-        }
-        for (var i = 0; i < linkmutedEles.length; i++) {
-            const curNode = linkmutedEles[i]
-            pending.push(this._replaceEle(curNode))
+        for (var arr of [commitauthorEles, authorEles, assigneeEles, linkmutedEles, linkprimaryEles]) {
+            for (var i = 0; i < arr.length; i++) {
+                const curNode = arr[i];
+                pending.push(this._replaceEle(curNode))
+            }
         }
         await Promise.all(pending)
     }
