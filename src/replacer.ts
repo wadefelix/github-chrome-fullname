@@ -73,12 +73,15 @@ export class NodeReplacer {
         await Promise.all(pending)
     }
     public async _replaceText(id: string, node: Element) {
+        if (id.includes("[")) {
+            return
+        }
         const user = await this._api.getUser(id, window.location.hostname)
         if(!user) {
             return
         }
         let userName = user.getName()
-        if(userName && userName != "" && node.textContent) {
+        if (userName && userName != "" && node.textContent) {
             node.textContent = node.textContent.replace(id, userName)
         }
     }
