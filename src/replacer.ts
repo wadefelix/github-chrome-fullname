@@ -60,7 +60,9 @@ export class NodeReplacer {
         for (var arr of [commitauthorEles, authorEles, assigneeEles, linkmutedEles, linkprimaryEles]) {
             for (var i = 0; i < arr.length; i++) {
                 const curNode = arr[i];
-                pending.push(this._replaceEle(curNode))
+                if (!curNode.hasAttribute('name-replaced')) {
+                    pending.push(this._replaceEle(curNode))
+                }
             }
         }
         await Promise.all(pending)
@@ -84,6 +86,7 @@ export class NodeReplacer {
         let userName = user.getName()
         if (userName && userName != "" && userName.length <= 32 && node.textContent && (!node.textContent.includes("["))) {
             node.textContent = node.textContent.replace(id, userName)
+            node.setAttribute('name-replaced', 'true')
         }
     }
 
