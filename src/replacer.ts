@@ -1,4 +1,5 @@
 // @flow
+import { notEqual } from "assert"
 import { API3 } from "./api"
 import Restrictor from "./restrictor"
 
@@ -81,7 +82,7 @@ export class NodeReplacer {
             return
         }
         let userName = user.getName()
-        if (userName && userName != "" && node.textContent) {
+        if (userName && userName != "" && userName.length <= 32 && node.textContent && (!node.textContent.includes("["))) {
             node.textContent = node.textContent.replace(id, userName)
         }
     }
