@@ -54,7 +54,14 @@ export class NodeReplacer {
         })
         eles = document.getElementsByClassName('Link--primary')
         var linkprimaryEles = Array.prototype.filter.call(eles, function(ele: Element) {
-            return ele.hasAttribute('data-hovercard-type') && ele.getAttribute('data-hovercard-type') == "user";
+            if (ele.hasAttribute('data-hovercard-type') && ele.getAttribute('data-hovercard-type') == "user") {
+                return true;
+            } else if (ele.tagName === "SPAN" && ele.parentElement && 
+                ele.parentElement.hasAttribute('data-hovercard-type') &&
+                ele.parentElement.getAttribute('data-hovercard-type') === "user") {
+                return true
+            }
+            return false;
         })
         const pending = []
         for (var arr of [commitauthorEles, authorEles, assigneeEles, linkmutedEles, linkprimaryEles]) {
