@@ -72,6 +72,27 @@ export class NodeReplacer {
                 }
             }
         }
+        var popCard = document.getElementsByClassName('js-hovercard-content') as HTMLCollectionOf<HTMLElement>
+        if (popCard.length>0 && popCard[0].style.display == "block") {
+            let ghid = popCard[0].getElementsByClassName("Link--secondary")
+            if (ghid.length == 0) {
+                ghid = popCard[0].getElementsByClassName("Link--primary")
+            }
+            for (var i=0; i< ghid.length ;i++) {
+                if (ghid[i].hasAttribute("data-octo-dimensions") && ghid[i].getAttribute("data-octo-dimensions") == "link_type:profile" &&
+                    ghid[i].nextElementSibling?.className != "oa-id-inserted" ) {
+                    //
+                    const oaid = document.createElement('span');
+                    oaid.textContent = ghid[i].textContent
+                    oaid.className = "oa-id-inserted";
+                    oaid.style.marginLeft = "1em"
+                    ghid[i].parentElement?.insertBefore(oaid, ghid[i].nextSibling)
+                    if (!oaid.hasAttribute('name-replaced')) {
+                        pending.push(this._replaceEle(oaid))
+                    }
+                }
+            }
+        }
         await Promise.all(pending)
     }
     public async _replaceEle(node: Element) {
