@@ -10,6 +10,8 @@ interface Options {
     api: string;
     apitype: string;
     jsonpath: string;
+    header_name: string;
+    header_value: string;
 }
 
 export class User {
@@ -43,6 +45,8 @@ export class API3 {
             api: '',
             apitype: 'plain',
             jsonpath: '',
+            header_name: '',
+            header_value: ''
         }
         let _this = this
 
@@ -50,6 +54,8 @@ export class API3 {
             _this.options.api = options.api;
             _this.options.apitype = options.apitype;
             _this.options.jsonpath = options.jsonpath;
+            _this.options.header_name = options.header_name;
+            _this.options.header_value = options.header_value;
         })
         // Restoring cached values.
         chrome.storage.local.get(null, (cachedValues): void => {
@@ -88,6 +94,8 @@ export class API3 {
                     api: options.api,
                     apitype: options.apitype,
                     jsonpath: options.jsonpath,
+                    header_name: options.header_name,
+                    header_value: options.header_value
                 }
                 resolve(_options);
             })
@@ -105,10 +113,14 @@ export class API3 {
           await this.readOptions()
         }
         try {
-            const response = await fetch(`${this.options.api}${id}`, {
-                method: "GET",
-                cache: "force-cache"
-            })
+            var myHeaders = new Headers();
+            if (this.options.header_name.length > 0) {
+                myHeaders.append(this.options.header_name, this.options.header_value);
+            }
+            var myInit: RequestInit = { method: 'GET',
+               headers: myHeaders,
+               cache: "force-cache" };
+            const response = await fetch(`${this.options.api}${id}`, myInit);
             const responseText = await response.text()
             if (this.options.apitype == 'json') {
                 // TODO

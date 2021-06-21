@@ -3,6 +3,8 @@ function save_options() {
   var api= document.getElementById('api').value;
   var jsonpath= document.getElementById('jsonpath').value;
   var apitypes = document.getElementsByName('apitype');
+  var header_name = document.getElementById('header_name').value;
+  var header_value = document.getElementById('header_value').value;
   var apitype = 'plain';
   for (var i=0; i < apitypes.length; i++) {
     if (apitypes[i].checked) {
@@ -12,7 +14,9 @@ function save_options() {
   chrome.storage.sync.set({
     api: api,
     apitype: apitype,
-    jsonpath: jsonpath
+    jsonpath: jsonpath,
+    header_name: header_name,
+    header_value: header_value
   }, function() {
     // Update status to let user know options were saved.
     var status = document.getElementById('status');
@@ -29,10 +33,14 @@ function restore_options() {
   chrome.storage.sync.get({
     api: '',
     apitype: 'plain',
-    jsonpath: ''
+    jsonpath: '',
+    header_name: '',
+    header_value: ''
   }, function(items) {
     document.getElementById('api').value = items.api;
     document.getElementById('jsonpath').value = items.jsonpath;
+    document.getElementById('header_name').value = items.header_name;
+    document.getElementById('header_value').value = items.header_value;
     var apitypes = document.getElementsByName('apitype');
     for (var i=0; i < apitypes.length; i++) {
       if (apitypes[i].value == items.apitype) {
