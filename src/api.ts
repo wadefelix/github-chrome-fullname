@@ -49,8 +49,12 @@ export class API3 {
             header_value: ''
         }
         let _this = this
-
-        chrome.storage.sync.get({"api": ''}, function(options){
+        chrome.storage.sync.get({"api": '',
+                "apitype": 'plain',
+                "jsonpath": '',
+                'header_name': '',
+                'header_value': '',
+        }, function(options){
             _this.options.api = options.api;
             _this.options.apitype = options.apitype;
             _this.options.jsonpath = options.jsonpath;
@@ -88,8 +92,13 @@ export class API3 {
     }
 
     private async readOptions() {
-        var options = new Promise<Options>(function(resolve, reject){
-            chrome.storage.sync.get({"api": '', "apitype": 'plain', "jsonpath": ''}, function(options){
+        var opts = new Promise<Options>(function(resolve, reject){
+            chrome.storage.sync.get({"api": '',
+                "apitype": 'plain',
+                "jsonpath": '',
+                'header_name': '',
+                'header_value': '',
+            }, function(options){
                 let _options = {
                     api: options.api,
                     apitype: options.apitype,
@@ -101,7 +110,7 @@ export class API3 {
             })
         });
 
-        this.options = await options
+        this.options = await opts
         // console.log(this.api);
     }
     public async getUserFromOA(id: string, root: string): Promise<User> {
@@ -114,7 +123,7 @@ export class API3 {
         }
         try {
             var myHeaders = new Headers();
-            if (this.options.header_name.length > 0) {
+            if (this.options.header_name) {
                 myHeaders.append(this.options.header_name, this.options.header_value);
             }
             var myInit: RequestInit = { method: 'GET',
