@@ -1,6 +1,6 @@
 {
   "name": "github-chrome-fullname",
-  "version": "0.5.1",
+  "version": "0.4.1",
   "description": "UserId Replacer for GitHub",
   "main": "build/index.bundle.js",
   "repository": "git+https://github.com/wadefelix/github-chrome-fullname.git",
